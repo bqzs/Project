@@ -1,0 +1,1 @@
+This repo mainly consist of my personal and team projects, which include setting up various home labs and and attacking different networks and all.Hope you guys enjoy it and all these stuuf are strictly for educational purposes.Do not try these attacks or methods on private firms without there permissions.
