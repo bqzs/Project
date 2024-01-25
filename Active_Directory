@@ -108,3 +108,13 @@
 
         * Add-Computer -DomainName Domain02 -Credential Domain02\Admin02 -Restart - 
           Force
+
+
+#change password of a user
+
+Set-ADAcoountPassword USERNAME -Reset -NewPassword (Read-Host -AsSecureString -Prompt 'New Password') -Verbose
+
+#to make a user do password reset at next login
+
+Set-ADUSER -ChangePasswordATLogon $tRUE -Identity USERNAME -Verbose
+
