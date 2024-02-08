@@ -1,0 +1,120 @@
+# Download Windows server 2022 and Windows 10 iso file
+
+
+      https://info.microsoft.com/ww-landing-windows-10-enterprise.html
+
+      https://www.microsoft.com/en-in/evalcenter/download-windows-server-2022
+
+
+
+# open VMware and create virtual machine
+
+
+     1 Create server as domain controller and set an administrative password and rename 
+        computer name to DC-1. Run setup.exec file
+
+    2 Create windows as  our workstation. Install by joining the local domain controller. While 
+       installing turn off things that can track and take additional ram power. Install VMware 
+       tools.
+
+
+
+#To create a session.
+
+
+          *Enable-PSRemoting on domain controller.
+
+          *Start-Service WinRM on workstation
+
+          *Get-Item wsman:\localhosts
+
+          * Get-Item wsman:\localhosts \Clients\TrustedHosts
+
+          *set-item wsman:\localhosts \Clients\TrustedHosts -value (IP)
+
+          *New-PSSession -ComputerName {IP} -Credential (Get-Credential)
+
+          *Enter-PSSession ID
+
+
+
+#Change IP address on Domain controller to static and change hostname.
+
+
+         *sconfig
+
+         * Select 8 option and select index 1 and move to 1 Set network adapter address. Choose 
+            S for static and Create your static IP address along with default  gateway, and leave the 
+            subnet mask unchanged.
+
+
+
+#Change DNS server to HostIP
+
+
+           *sconfig
+
+            *Select 8 option and select index 1 and move to 2 option Set DNS servers.
+
+            *Enter your host IP 
+
+
+
+# Install the Active Directory Domain Services Feature and configure AD
+
+
+       * Install-WindowsFeature AD-Domain-Services -IncludeManagementTools
+
+        * import-Module ADDSDeployment
+
+        * install-ADDSForest 
+
+                            Enter your domain name [eg xyv.com] and an administrator password for the                                                                    
+                            domain
+
+        *To check our domain’s in AD run Get-AdDomain.
+
+
+
+#Set the DNS to AD DNS
+
+
+       * Get-NetIPAddress to check the InterfaceIndex
+
+       * Get-DNSClientServerAddress
+
+       * Set-DNSClientServerAddress -InterfaceIndex {index number} -ServerAddresses {ip}
+
+
+
+# Create AD Users
+
+
+         * New-ADUser -Name "Biku" -Accountpassword (Read-Host -AsSecureString 
+           "AccountPassword") -Enabled $true
+
+         *To view the users run Get-AdUser.
+
+         *To delete an user Remove-AdUser [name].
+
+
+
+#Connect computer to domain
+
+
+        * Get-DNSClientServerAddress
+
+        * Set-DNSClientServerAddress  -InterfaceIndex  {index number}  -ServerAddresses {ip}
+
+        * Add-Computer -DomainName Domain02 -Credential Domain02\Admin02 -Restart - 
+          Force
+
+
+#change password of a user
+
+Set-ADAcoountPassword USERNAME -Reset -NewPassword (Read-Host -AsSecureString -Prompt 'New Password') -Verbose
+
+#to make a user do password reset at next login
+
+Set-ADUSER -ChangePasswordATLogon $tRUE -Identity USERNAME -Verbose
+
