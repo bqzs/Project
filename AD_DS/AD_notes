@@ -69,4 +69,47 @@ RAS and IAS Servers - Servers in this group can access remote access properties 
 
 
 
+Trusts
+
+Trusts are a mechanism in place for users in the network to gain access to other resources in the domain. trusts outline the way that the domains inside of a forest communicate to each other, in some environments trusts can be extended out to external domains and even forests in some cases.
+
+Directional - The direction of the trust flows from a trusting domain to a trusted domain
+Transitive - The trust relationship expands beyond just two domains to include other trusted domains
+
+Domain policies
+
+Policies are a very big part of Active Directory, they dictate how the server operates and what rules it will and will not follow. They simply act as a rulebook for Active  Directory that a domain admin can modify and alter as they deem necessary to keep the network running smoothly and securely. Along with the very long list of default domain policies, domain admins can choose to add in their own policies not already on the domain controlle
+
+Domain Services
+
+They are services that the domain controller provides to the rest of the domain or tree
+LDAP - Lightweight Directory Access Protocol; provides communication between applications and directory services
+Certificate Services - allows the domain controller to create, validate, and revoke public key certificates
+DNS, LLMNR, NBT-NS - Domain Name Services for identifying IP hostnames
+
+Domain Authentication
+
+ There are two main types of authentication in place for Active Directory: NTLM and Kerberos. 
+
+Kerberos - The default authentication service for Active Directory uses ticket-granting tickets and service tickets to authenticate users and give users access to other resources across the domain.
+NTLM - default Windows authentication protocol uses an encrypted challenge/response protocol
+
+
+Azure AD 
+
+Azure acts as the middle man between your physical Active Directory and your users' sign on. This allows for a more secure transaction between domains, making a lot of Active Directory attacks ineffective.
+
+
+Cloud Security
+
+Windows Server AD	 Azure AD
+
+LDAP	                 Rest APIs
+NTLM	                 OAuth/SAML
+Kerberos	         OpenID
+OU Tree	                 Flat Structure
+Domains and Forests	 Tenants
+Trusts	                 Guests
+
+
 
