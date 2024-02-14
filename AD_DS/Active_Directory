@@ -114,7 +114,7 @@
 
 Set-ADAcoountPassword USERNAME -Reset -NewPassword (Read-Host -AsSecureString -Prompt 'New Password') -Verbose
 
-#to make a user do password reset at next login
+##to make a user do password reset at next login
 
 Set-ADUSER -ChangePasswordATLogon $tRUE -Identity USERNAME -Verbose
 
